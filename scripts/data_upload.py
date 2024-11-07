@@ -1,22 +1,23 @@
 from azureml.core import Workspace, Datastore
+from config import account_key, account_name, container_name, datastore_name
 
 # Connect to your Azure ML workspace
 ws = Workspace.from_config()
 
 # Register the blob storage account as a datastore
 datastore = Datastore.register_azure_blob_container(
-    workspace=ws,
-    datastore_name='testdata',
-    container_name='test-data',
-    account_name='irisdata1',
-    account_key='S5NPvpt1gsqFITHZi1NcGRC6c7nc02PHFFKnem5b4bLPqiVjpbRuJvq3sVVlMNXeK55xFWea16PL+AStqHVaag==',
-    create_if_not_exists=True
+    workspace = ws,
+    datastore_name = datastore_name,
+    container_name = container_name,
+    account_name = account_name,
+    account_key = account_key,
+    create_if_not_exists = True
 )
 
 from azureml.core.dataset import Dataset
 
 # Define the path to the data in the datastore
-datastore_path = [(datastore, 'Iris.csv')]
+datastore_path = [(datastore, 'iris.csv')]
 
 # Create a TabularDataset from the data in the datastore
 dataset = Dataset.Tabular.from_delimited_files(path=datastore_path)
@@ -25,7 +26,7 @@ dataset = Dataset.Tabular.from_delimited_files(path=datastore_path)
 dataset = dataset.register(
     workspace=ws,
     name='iris_data_set',
-    description='Dataset created from local data uploaded to Blob Storage',
+    description='registering iris dataset',
     create_new_version=True
 )
 

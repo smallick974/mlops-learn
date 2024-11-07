@@ -1,11 +1,11 @@
 from azureml.core import Workspace, Dataset
-from azureml.core import Workspace, Experiment, Run 
+from azureml.core import Workspace, Experiment
 
 # Load the workspace from the saved config file
 ws = Workspace.from_config()
 
 # Step 2: Create or get an existing experiment 
-experiment = Experiment(workspace=ws, name='data-analysis')
+experiment = Experiment(workspace=ws, name='data-preprocessing')
 
 # Start a new run 
 run = experiment.start_logging()
