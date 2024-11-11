@@ -1,5 +1,11 @@
-from azureml.core import Workspace, Datastore
 from config import account_key, account_name, container_name, datastore_name
+from azureml.core import Workspace, Datastore
+from azureml.core.dataset import Dataset
+
+datastore_name = datastore_name
+container_name = container_name
+account_name = account_name
+account_key = account_key
 
 # Connect to your Azure ML workspace
 ws = Workspace.from_config()
@@ -13,8 +19,6 @@ datastore = Datastore.register_azure_blob_container(
     account_key = account_key,
     create_if_not_exists = True
 )
-
-from azureml.core.dataset import Dataset
 
 # Define the path to the data in the datastore
 datastore_path = [(datastore, 'iris.csv')]

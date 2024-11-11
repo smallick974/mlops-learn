@@ -167,3 +167,6 @@ config.py.amltmp
 scripts/.amlignore
 scripts/.amlignore.amltmp
 .gitignore.amltmp
+.ipynb_aml_checkpoints/
+*.ipynb.amltmp
+*.py.amltmp
