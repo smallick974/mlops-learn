@@ -1,6 +1,16 @@
-from config import account_key, account_name, container_name, datastore_name
 from azureml.core import Workspace, Datastore
 from azureml.core.dataset import Dataset
+
+import sys 
+import os 
+
+# Get the root directory (one level up from the current file) 
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '..')) 
+
+# Add the root directory to sys.path
+sys.path.append(root_dir)
+
+from config import account_key, account_name, container_name, datastore_name
 
 datastore_name = datastore_name
 container_name = container_name
