@@ -8,4 +8,4 @@ container_name = os.getenv('container_name')
 account_name = os.getenv('account_name')
 account_key = os.getenv('account_key')
 
-test=123
+
