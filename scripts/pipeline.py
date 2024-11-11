@@ -24,25 +24,25 @@ data_upload_step = PythonScriptStep(name="Data Upload",
                                     script_name="data_upload.py",
                                     compute_target=compute_target,
                                     runconfig=run_config,
-                                    source_directory="path_to_your_scripts")
+                                    source_directory=".")
 
 data_processing_step = PythonScriptStep(name="Data PreProcessing",
                                         script_name="data_preprocessing.py",
                                         compute_target=compute_target,
                                         runconfig=run_config,
-                                        source_directory="path_to_your_scripts")
+                                        source_directory=".")
 
 eda_step = PythonScriptStep(name="Exploratory Data Analysis",
                             script_name="eda.py",
                             compute_target=compute_target,
                             runconfig=run_config,
-                            source_directory="path_to_your_scripts")
+                            source_directory=".")
 
 model_training_step = PythonScriptStep(name="Model Training",
                                        script_name="model_training.py",
                                        compute_target=compute_target,
                                        runconfig=run_config,
-                                       source_directory="path_to_your_scripts")
+                                       source_directory=".")
 
 # Define the pipeline by specifying the steps in sequence
 pipeline_steps = [data_upload_step, data_processing_step, eda_step, model_training_step]
