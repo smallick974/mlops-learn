@@ -1,0 +1,40 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'  # Replace '3.x' with the desired Python version
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo 'export PATH="$HOME/.poetry/bin:$PATH"' >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Authenticate Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Authenticate Azure ML
+        run: |
+          az ml workspace show --workspace-name mltraining --resource-group ml-training-rg
+
+      - name: Run data upload script
+        run: poetry run python script/data_upload.py
