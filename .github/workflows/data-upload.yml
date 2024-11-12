@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:  # Add this line to enable manual triggers
 
 jobs:
   build:
@@ -26,6 +27,14 @@ jobs:
       - name: Install dependencies
         run: |
           poetry install
+
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Install Azure Machine Learning CLI Extension
+        run: |
+          az extension add -n azure-cli-ml
 
       - name: Authenticate Azure CLI
         uses: azure/login@v1
