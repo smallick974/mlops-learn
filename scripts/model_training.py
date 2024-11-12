@@ -1,5 +1,6 @@
 from azureml.core import Workspace, Dataset, Experiment
 from sklearn.preprocessing import LabelEncoder
+import os
 
 #Metrics
 from sklearn.metrics import classification_report
@@ -32,6 +33,20 @@ df = processed_data.to_pandas_dataframe()
 
 # Create or get an existing experiment 
 experiment = Experiment(workspace=ws, name='model-training')
+
+################################################################################################################
+
+if not os.path.exists("images"):
+    os.mkdir("images")
+
+    image_dir = os.path.abspath("images")
+    print(image_dir)
+else:
+    image_dir = os.path.abspath("images")
+    print(image_dir)
+
+################################################################################################################
+
 
 # Start a new run 
 run = experiment.start_logging()
@@ -238,6 +253,13 @@ from sklearn.tree import plot_tree
 plt.figure(figsize = (15,10))
 plot_tree(decision_tree.fit(X_train, y_train)  ,filled=True)
 plt.show()
+
+# Save the plot to a file 
+image_path = f"{image_dir}/plot_tree.png" 
+plt.savefig(image_path) 
+
+# Log the image as an artifact 
+run.log_image(name="Plot Tree", path=image_path)
 
 results = pd.DataFrame({
     'Model': [ 'KNN', 
