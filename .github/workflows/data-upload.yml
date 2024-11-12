@@ -46,4 +46,4 @@ jobs:
           az ml workspace show --workspace-name mltraining --resource-group ml-training-rg
 
       - name: Run data upload script
-        run: poetry run python script/data_upload.py
+        run: poetry run python scripts/data_upload.py
