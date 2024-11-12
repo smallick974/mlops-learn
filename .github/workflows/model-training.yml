@@ -1,0 +1,51 @@
+name: Model Training Workflow
+
+on:
+  workflow_run:
+    workflows: ["EDA Workflow"]
+    types:
+      - completed
+  workflow_dispatch:  # Add this line to enable manual triggers
+
+jobs:
+  dependent-job:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}  # Run only if the previous workflow was successful
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+
+      - name: Install Poetry
+        run: |
+          curl -sSL https://install.python-poetry.org | python3 -
+          echo 'export PATH="$HOME/.poetry/bin:$PATH"' >> $GITHUB_ENV
+
+      - name: Install dependencies
+        run: |
+          poetry install
+
+      - name: Install Azure CLI
+        run: |
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+      - name: Install Azure Machine Learning CLI Extension
+        run: |
+          az extension add -n azure-cli-ml
+
+      - name: Authenticate Azure CLI
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Authenticate Azure ML
+        run: |
+          az ml workspace show --workspace-name mltraining --resource-group ml-training-rg
+
+      - name: Run dependent script
+        run: poetry run python scripts/model_training.py
