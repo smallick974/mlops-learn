@@ -1,6 +1,7 @@
 from azureml.core import Workspace, Dataset, Experiment
 import seaborn as sns
 import matplotlib.pyplot as plt
+import pandas.plotting
 from pandas.plotting import andrews_curves
 import os
 
